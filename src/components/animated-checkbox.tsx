@@ -2,7 +2,6 @@ import React, { useEffect, memo } from 'react'
 import Animated, {
   Easing, useSharedValue, useAnimatedProps, withTiming, interpolateColor
 } from 'react-native-reanimated'
-
 import Svg, { Path, Rect, Defs, ClipPath, G } from 'react-native-svg'
 
 const MARGIN = 10
@@ -27,6 +26,7 @@ const AnimatedCheckbox = (props: Props) => {
 
   useEffect(() => {
     progress.value = withTiming(checked ? 1 : 0, {
+      duration: checked ? 300 : 100,
       easing: Easing.linear
     })
   }, [checked])
