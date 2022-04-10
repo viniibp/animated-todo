@@ -2,7 +2,7 @@ import React, { useEffect, memo } from 'react'
 import Animated, {
   Easing, useSharedValue, useAnimatedProps, withTiming, interpolateColor
 } from 'react-native-reanimated'
-import Svg, { Path, Rect, Defs, ClipPath, G } from 'react-native-svg'
+import Svg, { Path, Defs, ClipPath, G } from 'react-native-svg'
 import AnimatedStroke from './animated-stroke'
 
 const MARGIN = 10
@@ -15,13 +15,18 @@ const AnimatedPath = Animated.createAnimatedComponent(Path)
 
 interface Props {
   checked?: boolean
+  highlightColor: string
+  checkmarkColor: string
+  boxOutlineColor: string
 }
 
 const AnimatedCheckbox = (props: Props) => {
-  const { checked } = props
-  const checkmarkColor = '#000000'
-  const highlighColor = '#ff0000'
-  const boxOutlineColor = '#000000'
+  const {
+    checked,
+    highlightColor,
+    checkmarkColor,
+    boxOutlineColor
+  } = props
 
   const progress = useSharedValue(0)
 
@@ -36,16 +41,16 @@ const AnimatedCheckbox = (props: Props) => {
     stroke: interpolateColor(
       Easing.bezier(0.16, 1, 0.3, 1)(progress.value),
       [0, 1],
-      [boxOutlineColor, highlighColor],
+      [boxOutlineColor, highlightColor],
       'RGB'
     ),
     fill: interpolateColor(
       Easing.bezier(0.16, 1, 0.3, 1)(progress.value),
       [0, 1],
-      ['#00000000', highlighColor],
+      ['#00000000', highlightColor],
       'RGB'
     ),
-  }), [highlighColor, boxOutlineColor])
+  }), [highlightColor, boxOutlineColor])
 
   return (
     <Svg viewBox={[- MARGIN, -MARGIN, vWidth + MARGIN, vHeight + MARGIN].join(' ')}>
@@ -63,7 +68,7 @@ const AnimatedCheckbox = (props: Props) => {
       <AnimatedStroke
         progress={progress}
         d={checkMarkPath}
-        stroke={highlighColor}
+        stroke={highlightColor}
         strokeWidth={10}
         strokeLinejoin='round'
         strokeLinecap='round'
