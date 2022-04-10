@@ -10,7 +10,7 @@ import {
 import ThemeToggle from '../components/theme-toggle'
 import TaskItem from "../components/task-item"
 
-export default function Main() {
+export default function MainScreen() {
   const [checked, setChecked] = useState(false)
 
   const handlePressCheckbox = useCallback(() => {
