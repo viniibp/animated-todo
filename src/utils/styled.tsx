@@ -5,7 +5,7 @@ export const makeStyledComponent = (Comp: any) => {
   return React.forwardRef(({ debug, ...props }: any, ref: any) => {
     const [style, restProps] = useStyledSystemPropsResolver(props)
     return (
-      <Comp>
+      <Comp {...restProps} style={style} ref={ref}>
         {props.children}
       </Comp>
     )
