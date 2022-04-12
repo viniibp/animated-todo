@@ -61,8 +61,8 @@ export const SwiapableView = (props: Props) => {
         </Box>
       )}
       <PanGestureHandler
-      simultaneousHandlers={simultaneousHandlers}
-      onGestureEvent={panGesture}
+        simultaneousHandlers={simultaneousHandlers}
+        onGestureEvent={panGesture}
       >
         <StyledView style={facadeStyle}>
           {children}
