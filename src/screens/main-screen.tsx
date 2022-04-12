@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useState } from "react"
 import {
-  Text,
-  Box,
   Center,
   VStack,
   useColorModeValue,
-  Pressable,
   Fab,
   Icon
 } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
+import AnimatedColorBox from "../components/animated-color.box"
 import ThemeToggle from '../components/theme-toggle'
 import TaskList from "../components/task-list"
 import shortid from "shortid"
@@ -75,9 +73,9 @@ export default function MainScreen() {
   }, [])
 
   return (
-    <Center
-      _dark={{ bg: 'blueGray.900' }}
-      _light={{ bg: 'blueGray.50' }}
+    <AnimatedColorBox
+      bg={useColorModeValue('warmGray.50', 'primary.900')}
+      w='full'
       flex={1}
     >
       <VStack space={5} alignItems='center' w='full'>
@@ -109,10 +107,10 @@ export default function MainScreen() {
               done: false
             },
             ...data
-          ])          
+          ])
           setEditingItemId(id)
         }}
       />
-    </Center>
+    </AnimatedColorBox>
   )
 }
