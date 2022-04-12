@@ -1,11 +1,13 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   Text,
   Box,
   Center,
   VStack,
   useColorModeValue,
-  Pressable
+  Pressable,
+  Fab,
+  Icon
 } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
 import ThemeToggle from '../components/theme-toggle'
@@ -67,7 +69,7 @@ export default function MainScreen() {
 
   const handleRemoveItem = useCallback(item => {
     setData(prevData => {
-      const newData =prevData.filter(i => i !== item)
+      const newData = prevData.filter(i => i !== item)
       return newData
     })
   }, [])
@@ -91,6 +93,26 @@ export default function MainScreen() {
         />
         <ThemeToggle />
       </VStack>
+      <Fab
+        position='absolute'
+        renderInPortal={false}
+        size='sm'
+        icon={<Icon color='white' as={<AntDesign name='plus' />} size='sm' />}
+        colorScheme={useColorModeValue('blue', 'darkBlue')}
+        bg={useColorModeValue('blue.500', 'blue.400')}
+        onPress={() => {
+          const id = shortid.generate()
+          setData([
+            {
+              id,
+              subject: '',
+              done: false
+            },
+            ...data
+          ])          
+          setEditingItemId(id)
+        }}
+      />
     </Center>
   )
 }
