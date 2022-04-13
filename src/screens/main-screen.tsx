@@ -1,26 +1,26 @@
 import React, { useCallback, useState } from "react"
 import {
-  Center,
   VStack,
   useColorModeValue,
   Fab,
   Icon
 } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
-import AnimatedColorBox from "../components/animated-color.box"
-import ThemeToggle from '../components/theme-toggle'
+import AnimatedColorBox from "../components/animated-color-box"
 import TaskList from "../components/task-list"
 import shortid from "shortid"
+import Masthead from "../components/masthead"
+import NavBar from "../components/navbar"
 
 const initialData = [
   {
     id: shortid.generate(),
-    subject: 'Fazer um aplicativo de ToDo-List',
+    subject: 'Criar tarefas',
     done: false
   },
   {
     id: shortid.generate(),
-    subject: 'Testar o aplicativo em forma de apk',
+    subject: 'Terminar as tarefas',
     done: false
   },
 ]
@@ -78,7 +78,20 @@ export default function MainScreen() {
       w='full'
       flex={1}
     >
-      <VStack space={5} alignItems='center' w='full'>
+      <Masthead
+        title="Sua lista de tarefas!"
+        image={require('../assets/masthead.png')}
+      >
+        <NavBar />
+      </Masthead>
+      <VStack
+        flex={2}
+        bg={useColorModeValue('warmGray.50', 'primary.900')}
+        space={1}
+        mt='-20px'
+        borderTopRadius='20px'
+        pt='20px'
+      >
         <TaskList
           data={data}
           editingItemId={editingItemId}
@@ -89,7 +102,6 @@ export default function MainScreen() {
           onToggleItem={handleToggleTaskItem}
 
         />
-        <ThemeToggle />
       </VStack>
       <Fab
         position='absolute'
