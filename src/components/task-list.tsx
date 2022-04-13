@@ -113,7 +113,10 @@ export default function TaskList(props: TaskListProps) {
   const refScrollView = useRef(null)
 
   return (
-    <StyledScrollView ref={refScrollView} w='full'>
+    <StyledScrollView
+      ref={refScrollView}
+      w='full'
+    >
       <AnimatePresence>
         {data.map(item => (
           <AnimatedTaskItem

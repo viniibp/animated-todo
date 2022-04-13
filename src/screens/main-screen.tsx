@@ -1,26 +1,26 @@
 import React, { useCallback, useState } from "react"
 import {
-  Text,
-  Box,
-  Center,
   VStack,
   useColorModeValue,
-  Pressable
+  Fab,
+  Icon
 } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
-import ThemeToggle from '../components/theme-toggle'
+import AnimatedColorBox from "../components/animated-color-box"
 import TaskList from "../components/task-list"
 import shortid from "shortid"
+import Masthead from "../components/masthead"
+import NavBar from "../components/navbar"
 
 const initialData = [
   {
     id: shortid.generate(),
-    subject: 'Fazer um aplicativo de ToDo-List',
+    subject: 'Criar tarefas',
     done: false
   },
   {
     id: shortid.generate(),
-    subject: 'Testar o aplicativo em forma de apk',
+    subject: 'Terminar as tarefas',
     done: false
   },
 ]
@@ -67,18 +67,31 @@ export default function MainScreen() {
 
   const handleRemoveItem = useCallback(item => {
     setData(prevData => {
-      const newData =prevData.filter(i => i !== item)
+      const newData = prevData.filter(i => i !== item)
       return newData
     })
   }, [])
 
   return (
-    <Center
-      _dark={{ bg: 'blueGray.900' }}
-      _light={{ bg: 'blueGray.50' }}
+    <AnimatedColorBox
+      bg={useColorModeValue('warmGray.50', 'primary.900')}
+      w='full'
       flex={1}
     >
-      <VStack space={5} alignItems='center' w='full'>
+      <Masthead
+        title="Sua lista de tarefas!"
+        image={require('../assets/masthead.png')}
+      >
+        <NavBar />
+      </Masthead>
+      <VStack
+        flex={2}
+        bg={useColorModeValue('warmGray.50', 'primary.900')}
+        space={1}
+        mt='-20px'
+        borderTopRadius='20px'
+        pt='20px'
+      >
         <TaskList
           data={data}
           editingItemId={editingItemId}
@@ -89,8 +102,27 @@ export default function MainScreen() {
           onToggleItem={handleToggleTaskItem}
 
         />
-        <ThemeToggle />
       </VStack>
-    </Center>
+      <Fab
+        position='absolute'
+        renderInPortal={false}
+        size='sm'
+        icon={<Icon color='white' as={<AntDesign name='plus' />} size='sm' />}
+        colorScheme={useColorModeValue('blue', 'darkBlue')}
+        bg={useColorModeValue('blue.500', 'blue.400')}
+        onPress={() => {
+          const id = shortid.generate()
+          setData([
+            {
+              id,
+              subject: '',
+              done: false
+            },
+            ...data
+          ])
+          setEditingItemId(id)
+        }}
+      />
+    </AnimatedColorBox>
   )
 }
